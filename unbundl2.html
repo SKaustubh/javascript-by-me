@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Carousel</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #ffffff;
+      }
+
+      .slider {
+        width: 800px;
+        height: 500px;
+        border-radius: 10px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .slides {
+        width: 700%; /* Adjusted width to accommodate seven slides */
+        height: 500px;
+        display: flex;
+        transition: transform 2s;
+      }
+
+      .slides input {
+        display: none;
+      }
+
+      .slide {
+        width: 14.2857%; /* Set width for each slide based on seven slides */
+        transition: 2s;
+      }
+
+      .slide img {
+        width: 800px;
+        height: 500px;
+      }
+
+      /* CSS for manual slide navigation */
+      .navigation-manual {
+        position: absolute;
+        width: 800px;
+        margin-top: -40px;
+        display: flex;
+        justify-content: space-between; /* Align buttons to the sides */
+        align-items: center;
+      }
+
+      .manual-btn {
+        position: relative;
+        border: 2px solid #4098dc;
+        padding: 5px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 1s;
+      }
+
+      .manual-btn:not(:last-child) {
+        margin-right: 40px;
+      }
+
+      .manual-btn:hover {
+        background: #40d3dc;
+      }
+
+      .manual-btn::before,
+      .manual-btn::after {
+        content: "";
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        border-style: solid;
+        border-width: 0 2px 2px 0;
+        transition: 0.5s;
+      }
+
+      .manual-btn::before {
+        top: 3px;
+        left: -5px;
+        transform: rotate(45deg);
+      }
+
+      .manual-btn::after {
+        top: 3px;
+        left: -5px;
+        transform: rotate(-135deg);
+      }
+
+      #radio1:checked ~ .manual-btn::before,
+      #radio2:checked ~ .manual-btn::before,
+      #radio3:checked ~ .manual-btn::before,
+      #radio4:checked ~ .manual-btn::before,
+      #radio5:checked ~ .manual-btn::before,
+      #radio6:checked ~ .manual-btn::before,
+      #radio7:checked ~ .manual-btn::before,
+      #radio1:checked ~ .manual-btn::after,
+      #radio2:checked ~ .manual-btn::after,
+      #radio3:checked ~ .manual-btn::after,
+      #radio4:checked ~ .manual-btn::after,
+      #radio5:checked ~ .manual-btn::after,
+      #radio6:checked ~ .manual-btn::after,
+      #radio7:checked ~ .manual-btn::after {
+        border-color: transparent #40d3dc transparent transparent;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slider">
+      <div class="slides">
+        <!--radio buttons start-->
+        <input type="radio" name="radio-btn" id="radio1" />
+        <input type="radio" name="radio-btn" id="radio2" />
+        <input type="radio" name="radio-btn" id="radio3" />
+        <input type="radio" name="radio-btn" id="radio4" />
+        <input type="radio" name="radio-btn" id="radio5" />
+        <input type="radio" name="radio-btn" id="radio6" />
+        <input type="radio" name="radio-btn" id="radio7" />
+        <!--radio buttons end-->
+        <!--slide images start-->
+        <div class="slide first">
+          <img
+            src="https://images.pexels.com/photos/1603650/pexels-photo-1603650.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            alt="Product 1"
+          />
+        </div>
+
+        <div class="slide">
+          <img
+            src="https://images.pexels.com/photos/3262994/pexels-photo-3262994.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            alt="taj mahal"
+          />
+        </div>
+
+        <div class="slide">
+          <img
+            src="https://images.pexels.com/photos/1631665/pexels-photo-1631665.jpeg?auto=compress&cs=tinysrgb&w=400"
+            alt="china"
+          />
+        </div>
+
+        <div class="slide">
+          <img
+            src="https://images.pexels.com/photos/2064827/pexels-photo-2064827.jpeg?auto=compress&cs=tinysrgb&w=400"
+            alt="jordan"
+          />
+        </div>
+
+        <div class="slide">
+          <img
+            src="https://images.pexels.com/photos/13911606/pexels-photo-13911606.jpeg?auto=compress&cs=tinysrgb&w=600"
+            alt="coloseum"
+          />
+        </div>
+
+        <div class="slide">
+          <img
+            src="https://images.pexels.com/photos/12046436/pexels-photo-12046436.jpeg?auto=compress&cs=tinysrgb&w=400"
+            alt="chicha"
+          />
+        </div>
+
+        <div class="slide">
+          <img
+            src="https://images.pexels.com/photos/2929906/pexels-photo-2929906.jpeg?auto=compress&cs=tinysrgb&w=400"
+            alt="Peru"
+          />
+        </div>
+        <!--slide images end-->
+
+        <!--automatic navigation start-->
+        <div class="navigation-auto">
+          <div class="auto-btn1"></div>
+          <div class="auto-btn2"></div>
+          <div class="auto-btn3"></div>
+          <div class="auto-btn4"></div>
+          <div class="auto-btn5"></div>
+          <div class="auto-btn6"></div>
+          <div class="auto-btn7"></div>
+        </div>
+        <!--automatic navigation end-->
+      </div>
+      <!--manual navigation start-->
+      <div class="navigation-manual">
+        <label for="radio1" class="manual-btn"></label>
+        <label for="radio2" class="manual-btn"></label>
+        <label for="radio3" class="manual-btn"></label>
+        <label for="radio4" class="manual-btn"></label>
+        <label for="radio5" class="manual-btn"></label>
+        <label for="radio6" class="manual-btn"></label>
+        <label for="radio7" class="manual-btn"></label>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      var counter = 1;
+      setInterval(function () {
+        document.getElementById("radio" + counter).checked = true;
+        counter++;
+        if (counter > 7) {
+          counter = 1;
+        }
+      }, 20000);
+    </script>
+  </body>
+</html>

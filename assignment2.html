@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Chocolate Customizer</title>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 20px;
+      }
+
+      #chocolate-options {
+        margin-bottom: 20px;
+      }
+
+      #selected-chocolates {
+        margin-bottom: 20px;
+      }
+
+      #total-price {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <
+    <h1>Chocolate Customizer</h1>
+
+    <div id="chocolate-options">
+      <!-- Display available chocolates with checkboxes -->
+    </div>
+
+    <div id="selected-chocolates">
+      <h2>Your Selection:</h2>
+      <!-- Display selected chocolates with quantities -->
+    </div>
+
+    <div id="total-price">
+      <h2>Total Price: $<span id="price">0.00</span></h2>
+    </div>
+
+    <button id="addToCartBtn" onclick="addToCart()">Add to Cart</button>
+    <script>
+      // Sample data of available chocolates
+      const chocolates = [
+        { id: 1, name: "Milk Chocolate", price: 2.0 },
+        { id: 2, name: "Dark Chocolate", price: 2.5 },
+        // Add more chocolates as needed
+      ];
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const chocolateOptions = document.getElementById("chocolate-options");
+        const selectedChocolates = document.getElementById(
+          "selected-chocolates"
+        );
+        const totalPrice = document.getElementById("price");
+
+        let selectedItems = [];
+
+        // Display available chocolates with checkboxes
+        chocolates.forEach((chocolate) => {
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.id = chocolate.id;
+          checkbox.addEventListener("change", () => updateSelection(chocolate));
+
+          const label = document.createElement("label");
+          label.htmlFor = chocolate.id;
+          label.textContent = `${chocolate.name} - $${chocolate.price.toFixed(
+            2
+          )}`;
+
+          chocolateOptions.appendChild(checkbox);
+          chocolateOptions.appendChild(label);
+          chocolateOptions.appendChild(document.createElement("br"));
+        });
+
+        // Function to update selected chocolates and total price
+        const updateSelection = (chocolate) => {
+          const checkbox = document.getElementById(chocolate.id);
+
+          if (checkbox.checked) {
+            if (selectedItems.length < 8) {
+              selectedItems.push(chocolate);
+            } else {
+              checkbox.checked = false; // Don't allow more than 8 items
+              alert("You can select up to 8 chocolates.");
+            }
+          } else {
+            selectedItems = selectedItems.filter(
+              (item) => item.id !== chocolate.id
+            );
+          }
+
+          displaySelectedChocolates();
+        };
+
+        // Function to display selected chocolates and update total price
+        const displaySelectedChocolates = () => {
+          selectedChocolates.innerHTML = "<h2>Your Selection:</h2>";
+
+          let totalPriceValue = 0.0;
+
+          selectedItems.forEach((item) => {
+            const quantity = selectedItems.filter(
+              (i) => i.id === item.id
+            ).length;
+            const itemTotalPrice = quantity * item.price;
+
+            totalPriceValue += itemTotalPrice;
+
+            const selectedChocolate = document.createElement("p");
+            selectedChocolate.textContent = `${
+              item.name
+            } x${quantity} - $${itemTotalPrice.toFixed(2)}`;
+
+            selectedChocolates.appendChild(selectedChocolate);
+          });
+
+          totalPrice.textContent = totalPriceValue.toFixed(2);
+        };
+
+        // Function to add selected chocolates to the "cart"
+        const addToCart = () => {
+          if (selectedItems.length === 0) {
+            alert("Please select at least one chocolate.");
+            return;
+          }
+
+          alert(`Added to Cart:\n${getCartSummary()}`);
+          resetSelection();
+        };
+
+        // Function to get a summary of the items in the "cart"
+        const getCartSummary = () => {
+          let cartSummary = "";
+
+          selectedItems.forEach((item) => {
+            const quantity = selectedItems.filter(
+              (i) => i.id === item.id
+            ).length;
+            cartSummary += `${item.name} x${quantity}, `;
+          });
+
+          // Remove the trailing comma and space
+          cartSummary = cartSummary.slice(0, -2);
+
+          return cartSummary;
+        };
+
+        // Function to reset the selection
+        const resetSelection = () => {
+          selectedItems = [];
+          displaySelectedChocolates();
+          document
+            .querySelectorAll("#chocolate-options input")
+            .forEach((input) => {
+              input.checked = false;
+            });
+        };
+      });
+    </script>
+  </body>
+</html>
